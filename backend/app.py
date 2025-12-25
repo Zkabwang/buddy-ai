@@ -10,7 +10,7 @@ def get_contacts():
     json_constact = map(lambda x: x.to_json(), contacts)  #get all contacts from the database
     return jsonify([contact.to_json() for contact in contacts]), 200
     
-#POST contact endpoint
+#POST create contact endpoint
 @app.route("/contacts", methods=['POST']) # Endpoint to create a new contact
 def create_contact():
     try:
@@ -18,7 +18,7 @@ def create_contact():
 
         reqired_fields = ['first_name','email', 'role', 'description'] #required fields for creating a contact
         for field in reqired_fields: #field validation
-            if field not in data: #\\check if field is missing
+            if field not in data or not data.get(field):
                 return jsonify({"error": f'Missing reuqired: {field}' }), 400 #return error if field is missing
             
 

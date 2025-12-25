@@ -4,7 +4,7 @@ class Contact(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(100), unique=False,nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
-    role = db.Column(db.String(20), unique=True, nullable=False)
+    role = db.Column(db.String(20), unique=False, nullable=False)
     description = db.Column(db.Text, unique=False, nullable=True)
    
 
