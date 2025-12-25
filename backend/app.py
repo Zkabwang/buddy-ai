@@ -1,7 +1,7 @@
-from flask import request, jsonify
+from flask import request, jsonify, send_from_directory
 from config import app, db
 from models import Contact
-
+import os
 
 #GET all contacts endpoint
 @app.route("/contacts", methods=['GET']) # Endpoint to get all contacts
@@ -70,6 +70,17 @@ def update_contact(id):
         db.session.rollback()
         return jsonify({"error": str(e)}), 500
 
+frontend_older = os.path.join(os.getcwd(),"..","frontend")
+dist_folder = os.path.join(frontend_older,"dist")
+
+
+#Server static files from the dist folder under the frontend directory
+@app.route('/', defaults={'filename': ''})
+@app.route('/<path:filename>')
+def index(filename):
+    if not filename:
+        filename = 'index.html'
+    return send_from_directory(dist_folder, filename)
 
 
 if __name__ == '__main__': # Run the Flask application
